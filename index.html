@@ -27,7 +27,6 @@ overflow: hidden;
 background-image: url("https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/oJsslZ.jpg");
 background-repeat: repeat;
 
-
 .row{
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -37,7 +36,6 @@ background-repeat: repeat;
  } 
  
 }
-
 
 .loop-item{
   width:360px;
@@ -103,13 +101,45 @@ background-repeat: repeat;
     text-align: left!important;
 }
 */
-    </style>
 
-    <style type="text/css">
       :root {
         color-scheme: dark;
       }
-	  
+
+    /* Scrollbar styling (page + any scrollable elements you control) */
+    :root{
+      --scrollTrack: #226cbb;  /* dark */
+      --scrollThumb: #56a7fe;  /* light */
+    }
+    
+    /* Firefox */
+    html{
+      scrollbar-color: var(--scrollThumb) var(--scrollTrack);
+      scrollbar-width: auto;
+    }
+    
+    /* Chrome/Edge/Safari */
+    ::-webkit-scrollbar{
+      width: 13px;
+      height: 13px; /* horizontal */
+    }
+    ::-webkit-scrollbar-track{
+      background: var(--scrollTrack);
+    }
+    ::-webkit-scrollbar-thumb{
+      background: var(--scrollThumb);
+      border-radius: 999px;
+      border: 3px solid var(--scrollTrack);
+    }
+    ::-webkit-scrollbar-thumb:hover{
+      filter: brightness(0.95);
+    }
+    
+    /* Scrollbar corner (where two scrollbars meet) */
+    ::-webkit-scrollbar-corner{
+      background: var(--scrollTrack);
+    }
+		
     </style>
 
     <script id="insert"></script>
@@ -201,4 +231,5 @@ background-repeat: repeat;
       }
     })
   </script>
+
 </html>
