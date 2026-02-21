@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8" />
     <title>Anya & Lolo News</title>
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="googlebot" content="noindex, nofollow">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css">
 
-    <style id="compiled-css" type="text/css">
+    <style>
       :root{
         --brand: #f4184c;
-        --bg: #ffffff;
         --text: #1b1b1b;
         --muted: rgba(27,27,27,0.72);
         --radius: 16px;
 
         --scrollTrack: #226cbb;
         --scrollThumb: #56a7fe;
+
+        /* Hard lock embed height */
+        --embedH: 380px;
+
+        /* Header height is derived from padding + font-size; we keep it stable */
+        --headerH: 54px;
       }
 
       :root{ color-scheme: dark; }
+
+      /* Force fixed-height embed: no vertical scrolling inside iframe */
+      html, body{
+        height: var(--embedH);
+        margin: 0;
+        overflow: hidden;
+      }
 
       /* Scrollbar styling */
       html{
@@ -38,9 +50,11 @@
       ::-webkit-scrollbar-thumb:hover{ filter: brightness(0.95); }
       ::-webkit-scrollbar-corner{ background: var(--scrollTrack); }
 
+      /* Container */
       .scroll-container{
+        height: var(--embedH);
         max-width: 100%;
-        overflow: hidden;
+        overflow: hidden;              /* vertical hidden */
         background-image: url("https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/oJsslZ.jpg");
         background-repeat: repeat;
         padding: 0;
@@ -50,9 +64,14 @@
 
       /* NEWS header */
       .whatsnew{
+        height: var(--headerH);        /* stable header height */
         margin: 0;
-        padding: 18px 10px;
-        font: 1000 22px/1.15 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        padding: 14px 10px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        font: 1000 20px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
         color: #fff;
         background: rgba(244, 24, 76, 0.92);
         letter-spacing: 0.4px;
@@ -60,50 +79,66 @@
       }
 
       @media (max-width: 600px){
+        :root{ --headerH: 58px; }
         .whatsnew{
-          padding: 18px 12px;
+          padding: 16px 12px;
           font-size: 20px;
         }
       }
 
-      /* Horizontal row */
-      .scroll-container .row{
-        flex-wrap: nowrap !important;
+      /* Horizontal scrolling row takes remaining height */
+      .scroll-row{
+        height: calc(var(--embedH) - var(--headerH));
+        display:flex;
+        flex-wrap: nowrap;
+
         overflow-x: auto;
         overflow-y: hidden;
-        display: flex;
-        max-width: 100%;
+
         margin: 0;
-        padding: 10px 10px 12px;
+        padding: 10px 10px 10px;
         gap: 10px;
+
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
+        align-items: stretch;
       }
 
       /* Card */
       .loop-item{
         flex: 0 0 auto;
         width: clamp(260px, 82vw, 360px);
-        margin: 0;
+        height: 100%;
+
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
         font-size: 16px;
         line-height: 1.38;
         scroll-snap-align: start;
 
         background: rgba(255,255,255,0.92);
         border-radius: var(--radius);
-        padding: 12px;
+        padding: 12px 12px 10px;      /* smaller bottom */
         box-shadow: 0 10px 26px rgba(0,0,0,0.10);
       }
 
-      /* Images */
+      @media (max-width: 600px){
+        .loop-item{
+          width: clamp(250px, 86vw, 340px);
+        }
+      }
+
+      /* Image */
       .loop-item img{
         width: 100%;
         height: auto;
-        display: block;
+        display:block;
         border-radius: 12px;
       }
 
-      /* Text colors */
+      /* Text colors (match your website) */
       .scroll-container,
       .scroll-container p,
       .scroll-container .small,
@@ -111,7 +146,7 @@
         color: var(--muted) !important;
       }
 
-      /* Titles */
+      /* Title */
       .loop-item h4,
       .loop-item .h5{
         color: rgba(244,24,76,0.92) !important;
@@ -122,14 +157,26 @@
 
       .entry-meta{
         color: rgba(27,27,27,0.62) !important;
+        margin: 0 0 8px !important;
       }
 
-      /* Trim bootstrap spacing a bit */
-      .loop-item .mb-2{ margin-bottom: .5rem !important; }
-      .loop-item .mt-2{ margin-top: .55rem !important; }
+      /* Tighten bootstrap helper spacing (ONE place only, no duplicates) */
+      .loop-item .mb-2{ margin-bottom: 8px !important; }
+      .loop-item .mt-2{ margin-top: 8px !important; }
 
-      /* Buttons - match Patreon Rewards vibe */
-      .loop-item .btn{
+      /* Paragraph spacing */
+      .loop-item p{
+        margin: 0 0 10px !important;
+      }
+
+      /* Button area sticks to bottom (removes random empty space) */
+      .cardBottom{
+        margin-top: auto;
+        padding-top: 8px;
+      }
+
+      /* Button styling (Patreon Rewards vibe) */
+      .btnAL{
         display:inline-flex;
         align-items:center;
         justify-content:center;
@@ -146,60 +193,53 @@
         color: #fff !important;
 
         box-shadow: 0 10px 22px rgba(0,0,0,.10);
-        transition: transform .12s ease, box-shadow .12s ease;
+        transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+        text-decoration: none !important;
       }
 
-      .loop-item .btn:hover{
+      .btnAL:hover{
         transform: translateY(-1px);
         box-shadow: 0 14px 28px rgba(0,0,0,.16);
-        text-decoration: none;
       }
 
-      .loop-item .btn:active{
+      .btnAL:active{
         transform: translateY(1px) scale(0.99);
       }
 
-      /* Secondary button variant (for Archive) */
-      .loop-item .btnSecondary{
+      /* Secondary (Archive) */
+      .btnAL.secondary{
         background: rgba(255,255,255,0.92);
         color: rgba(27,27,27,0.88) !important;
         border: 1px solid rgba(20,20,20,0.14);
       }
-      .loop-item .btnSecondary:hover{
+
+      .btnAL.secondary:hover{
         box-shadow: 0 14px 28px rgba(0,0,0,.12);
       }
 
-      /* Mobile tweaks */
-      @media (max-width: 600px){
-        .scroll-container .row{
-          padding: 10px 8px 12px;
-          gap: 10px;
-        }
-        .loop-item{
-          width: clamp(250px, 86vw, 340px);
-          font-size: 16px;
-          line-height: 1.38;
-          padding: 12px;
-        }
+      /* Social buttons row */
+      .btnRow{
+        display:flex;
+        gap: 10px;
+        justify-content:center;
+        flex-wrap:wrap;
       }
     </style>
-
-    <script id="insert"></script>
   </head>
 
   <body>
     <div class="container scroll-container text-center" style="padding:0; margin:0; border:0;">
-      <h2 class="text-center whatsnew">NEWS! SCROLL RIGHT ➡</h2>
+      <h2 class="whatsnew">NEWS! SCROLL RIGHT ➡</h2>
 
-      <div class="row">
+      <div class="scroll-row">
 
         <!-- 1) SUBSTACK -->
-        <div class="loop-item col">
+        <div class="loop-item">
           <a target="_blank" rel="noopener"
              href="https://open.substack.com/pub/anyalolo/p/game-development-digest-rpg-maker?r=6ty83v&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true">
             <img class="img-fluid mb-2"
-              src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/Blog-Anya_and_Lolo_Substack_Newsletter_RPG_Maker_Free_Plugins_Gamedev_Assets_Game_Development_Resources_RPG_Maker_Tips_Tricks.jpg"
-              alt="">
+                 src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/Blog-Anya_and_Lolo_Substack_Newsletter_RPG_Maker_Free_Plugins_Gamedev_Assets_Game_Development_Resources_RPG_Maker_Tips_Tricks.jpg"
+                 alt="">
           </a>
 
           <a target="_blank" rel="noopener"
@@ -215,21 +255,21 @@
             <p>If you're interested in free RPG Maker plugins, tips, game development tutorials, and assets, subscribe to our Game Development Digest!</p>
           </div>
 
-          <div class="text-center">
+          <div class="cardBottom text-center">
             <a target="_blank" rel="noopener"
                href="https://open.substack.com/pub/anyalolo/p/game-development-digest-rpg-maker?r=6ty83v&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true"
-               class="btn">
+               class="btnAL">
               ✍ Yes! Send Me the Plugins
             </a>
           </div>
         </div>
 
         <!-- 2) HALLOWEEN SALE -->
-        <div class="loop-item col">
+        <div class="loop-item">
           <a target="_blank" rel="noopener" href="https://itch.io/s/163176/happy-halloween-sale-">
             <img class="img-fluid mb-2"
-              src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/Blog-Anya_and_Lolo_Halloween.jpg"
-              alt="">
+                 src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/Blog-Anya_and_Lolo_Halloween.jpg"
+                 alt="">
           </a>
 
           <a target="_blank" rel="noopener" href="https://itch.io/s/163176/happy-halloween-sale-">
@@ -244,19 +284,19 @@
             <p>It’s been too long since our last sale, so we’re throwing open the doors to a Halloween party full of treats (and no tricks!) 🦇💜</p>
           </div>
 
-          <div class="text-center">
-            <a target="_blank" rel="noopener" href="https://itch.io/s/163176/happy-halloween-sale-" class="btn">
+          <div class="cardBottom text-center">
+            <a target="_blank" rel="noopener" href="https://itch.io/s/163176/happy-halloween-sale-" class="btnAL">
               🍬 Will You Join the Fun?
             </a>
           </div>
         </div>
 
         <!-- 3) GIVEAWAY -->
-        <div class="loop-item col">
+        <div class="loop-item">
           <a target="_blank" rel="noopener" href="https://forms.gle/db2EJA1Je6y19i6f7">
             <img class="img-fluid mb-2"
-              src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/Blog-News_RPG_Maker_MZ_MV_Unite_RPG_Maker_XP_VX_Ace_2k_2k3_Giveaway.jpg"
-              alt="">
+                 src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/Blog-News_RPG_Maker_MZ_MV_Unite_RPG_Maker_XP_VX_Ace_2k_2k3_Giveaway.jpg"
+                 alt="">
           </a>
 
           <a target="_blank" rel="noopener" href="https://forms.gle/db2EJA1Je6y19i6f7">
@@ -271,41 +311,35 @@
             <p>Anya &amp; Lolo are giving away copies of RPG Maker! Missing one? I’ll cover the costs for you, just lend a little hand in return! (,,&gt; ᴗ &lt;,,)</p>
           </div>
 
-          <div class="text-center">
-            <a target="_blank" rel="noopener" href="https://forms.gle/db2EJA1Je6y19i6f7" class="btn">
+          <div class="cardBottom text-center">
+            <a target="_blank" rel="noopener" href="https://forms.gle/db2EJA1Je6y19i6f7" class="btnAL">
               ✋ Want in? Click Here to Join
             </a>
           </div>
         </div>
 
         <!-- 4) SOCIALS -->
-        <div class="loop-item col">
+        <div class="loop-item">
           <a target="_blank" rel="noopener" href="https://www.youtube.com/@Anya_and_Lolo">
             <img class="img-fluid mb-2"
-              src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/anya-and-lolo.jpg"
-              alt="">
+                 src="https://raw.githubusercontent.com/Anya-and-Lolo/ItchBlog/main/anya-and-lolo.jpg"
+                 alt="">
           </a>
 
           <div class="text-left mt-2" style="text-align:center;">
             <p style="margin-bottom:12px;">More RPG Maker tips and tricks on socials! ✨</p>
           </div>
 
-          <div class="text-center" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-            <a target="_blank" rel="noopener" href="https://www.youtube.com/@Anya_and_Lolo" class="btn">YouTube</a>
-            <a target="_blank" rel="noopener" href="https://bio.site/hianya" class="btn">All Socials</a>
-            <a target="_blank" rel="noopener" href="https://anya-and-lolo.github.io/ItchBlog/blog-archive.html" class="btn btnSecondary">Posts Archive</a>
+          <div class="cardBottom">
+            <div class="btnRow">
+              <a target="_blank" rel="noopener" href="https://www.youtube.com/@Anya_and_Lolo" class="btnAL">YouTube</a>
+              <a target="_blank" rel="noopener" href="https://bio.site/hianya" class="btnAL">All Socials</a>
+              <a target="_blank" rel="noopener" href="https://anya-and-lolo.github.io/ItchBlog/blog-archive.html" class="btnAL secondary">Posts Archive</a>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
-
-    <script>
-      const cssElement = document.querySelector("#compiled-css");
-      window.addEventListener("message", (message) => {
-        if (message.data.css)  cssElement.textContent = message.data.css.payload;
-        if (message.data.html) document.body.innerHTML = message.data.html.payload;
-      });
-    </script>
   </body>
 </html>
