@@ -22,8 +22,8 @@
         /* Hard lock embed height */
         --embedH: 530px;
 
-        /* Header height is derived from padding + font-size; we keep it stable */
-        --headerH: 54px;
+        /* Header height is derived from padding + font-size */
+        --headerH: 50px;
       }
 
       :root{ color-scheme: dark; }
@@ -66,12 +66,12 @@
       .whatsnew{
         height: var(--headerH);        /* stable header height */
         margin: 0;
-        padding: 10px 8px;
+        padding: 10px 10px;
         display:flex;
         align-items:center;
         justify-content:center;
 
-        font: 800 18px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        font: 800 20px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
         color: #fff;
         background: rgba(244, 24, 76, 0.92);
         letter-spacing: 0.4px;
@@ -79,9 +79,9 @@
       }
 
       @media (max-width: 600px){
-        :root{ --headerH: 58px; }
+        :root{ --headerH: 54px; }
         .whatsnew{
-          padding: 16px 12px;
+          padding: 12px 12px;
           font-size: 20px;
         }
       }
@@ -96,7 +96,7 @@
         overflow-y: hidden;
 
         margin: 0;
-        padding: 10px 10px 10px;
+        padding: 8px 10px 10px;
         gap: 10px;
 
         scroll-snap-type: x mandatory;
@@ -115,12 +115,12 @@
         justify-content: flex-start;
 
         font-size: 16px;
-        line-height: 1.38;
+        line-height: 1.34;
         scroll-snap-align: start;
 
         background: rgba(255,255,255,0.92);
         border-radius: var(--radius);
-        padding: 12px 12px 10px;      /* smaller bottom */
+        padding: 10px 10px 8px;      /* smaller bottom */
         box-shadow: 0 10px 26px rgba(0,0,0,0.10);
       }
 
@@ -152,17 +152,17 @@
         color: rgba(244,24,76,0.92) !important;
         font-weight: 1000;
         letter-spacing: -0.2px;
-        margin: 10px 0 6px;
+        margin: 8px 0 5px;
       }
 
       .entry-meta{
         color: rgba(27,27,27,0.62) !important;
-        margin: 0 0 8px !important;
+        margin: 0 0 6px !important;
       }
 
       /* Tighten bootstrap helper spacing (ONE place only, no duplicates) */
-      .loop-item .mb-2{ margin-bottom: 8px !important; }
-      .loop-item .mt-2{ margin-top: 8px !important; }
+      .loop-item .mb-2{ margin-bottom: 6px !important; }
+      .loop-item .mt-2{ margin-top: 6px !important; }
 
       /* Paragraph spacing */
       .loop-item p{
@@ -172,7 +172,7 @@
       /* Button area sticks to bottom (removes random empty space) */
       .cardBottom{
         margin-top: auto;
-        padding-top: 8px;
+        padding-top: 6px;
       }
 
       /* Button styling (Patreon Rewards vibe) */
@@ -182,7 +182,7 @@
         justify-content:center;
         gap: 6px;
 
-        padding: 12px 16px;
+        padding: 10px 14px;
         border-radius: 14px;
 
         font-weight: 1000;
@@ -343,5 +343,6 @@
     </div>
   </body>
 </html>
+
 
 
