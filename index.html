@@ -102,7 +102,7 @@
         overflow-y: hidden;
 
         margin: 0;
-        padding: 4px 10px 8px; /* third one is extra bottom padding so scrollbar isn't cut at the bottom*/
+        padding: 4px 10px 4px; /* third one is extra bottom padding so scrollbar isn't cut at the bottom*/
         gap: 10px;
 
         scroll-snap-type: x mandatory;
@@ -172,8 +172,11 @@
 
       /* the “spacer” that absorbs extra height at the bottom */
       .loop-item .text-left.mt-2{
-        flex: 1 1 auto;
+        flex: 0 0 auto;
       }
+
+      /* this spacer eats leftover height */
+      .cardSpacer{ flex: 1 1 auto; }
       
       /* Paragraph spacing */
       .loop-item p{
@@ -358,6 +361,7 @@
     </div>
   </body>
 </html>
+
 
 
 
