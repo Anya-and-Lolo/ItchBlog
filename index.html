@@ -106,8 +106,14 @@
         gap: 10px;
 
         scroll-snap-type: x mandatory;
+        scroll-snap-stop: always;      /* IMPORTANT: stop at the snap point */
+        scroll-padding-left: 10px;     /* matches left padding */
+        scroll-padding-right: 10px;    /* matches right padding */
+        
         -webkit-overflow-scrolling: touch;
-        align-items: stretch; /* or use stretch */
+        scroll-behavior: smooth; /* nice for mousewheel/trackpad too */
+        
+        align-items: stretch;
       }
 
       /* Card */
@@ -115,6 +121,8 @@
         flex: 0 0 auto;
         width: clamp(260px, 95vw, 360px);
         height: 100%;
+
+        scroll-snap-align: start; /* IMPORTANT: stop at the snap point */
 
         display:flex;
         flex-direction: column;
@@ -359,8 +367,25 @@
 
       </div>
     </div>
+
+    <script>
+    (() => {
+      const row = document.querySelector(".scroll-row");
+      if (!row) return;
+    
+      row.addEventListener("wheel", (e) => {
+        // If user is trying to scroll vertically, translate it to horizontal
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          row.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    })();
+    </script>
+    
   </body>
 </html>
+
 
 
 
