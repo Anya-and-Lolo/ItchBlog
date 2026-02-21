@@ -6,7 +6,9 @@
     <meta name="robots" content="noindex, nofollow" />
     <meta name="googlebot" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta http-equiv="X-Frame-Options" content="ALLOWALL">
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css">
 
     <style>
@@ -30,11 +32,15 @@
 
       /* Force fixed-height embed: no vertical scrolling inside iframe */
       html, body{
-        height: var(--embedH);
         margin: 0;
         overflow: hidden;
       }
-
+      
+      body{
+        margin: 0;
+        overflow: hidden;
+      }
+      
       /* Scrollbar styling */
       html{
         scrollbar-color: var(--scrollThumb) var(--scrollTrack);
@@ -174,10 +180,10 @@
         padding: 0 !important;
       }
 
-      /* Button area sticks to bottom */
+      /* Card Bottom: Button area */
       .cardBottom{
-        margin-top: 8px;  /* distance from paragraph to the button */
-        padding-top: 0;
+        margin-top: auto;
+        padding-top: 6px; /* distance from paragraph to the button */
       }
 
       /* Button styling (Patreon Rewards vibe) */
@@ -348,6 +354,7 @@
     </div>
   </body>
 </html>
+
 
 
 
