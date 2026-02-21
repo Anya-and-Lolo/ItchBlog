@@ -167,9 +167,14 @@
       }
 
       /* Tighten bootstrap helper spacing */
-      .loop-item .mb-2{ flex: 1 1 auto; margin-bottom: 6px !important; }
+      .loop-item .mb-2{ margin-bottom: 6px !important; }
       .loop-item .mt-2{ margin-top: 6px !important; }
 
+      /* the “spacer” that absorbs extra height at the bottom */
+      .loop-item .text-left.mt-2{
+        flex: 1 1 auto;
+      }
+      
       /* Paragraph spacing */
       .loop-item p{
         margin: 0 0 8px !important;
@@ -353,6 +358,7 @@
     </div>
   </body>
 </html>
+
 
 
 
